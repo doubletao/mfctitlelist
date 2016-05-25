@@ -97,7 +97,21 @@ BOOL CCSYListCtrDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
-	// TODO: 在此添加额外的初始化代码
+	m_ctrList.Create(_T("list"), _T(""), WS_CHILD|WS_VISIBLE|WS_BORDER|LVS_REPORT|LVS_EDITLABELS,
+		CRect(10,10,400,200), this, 10086, NULL);
+
+	for (int i = 0; i < 100; i++)
+	{
+		CString str;
+		str.Format(_T("这是第%d条数据"), i);
+		TitleListItem item;
+		item.strDisplay = str;
+		if (i % 3 == 0)
+		{
+			item.bSelected = TRUE;
+		}
+		m_ctrList.InsertItem(item);
+	}
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }

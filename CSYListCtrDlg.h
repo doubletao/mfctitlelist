@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+#include "TitleListCtr.h"
 
 // CCSYListCtrDlg 对话框
 class CCSYListCtrDlg : public CDialogEx
@@ -22,6 +22,7 @@ public:
 // 实现
 protected:
 	HICON m_hIcon;
+	CTitleListCtr m_ctrList;
 
 	// 生成的消息映射函数
 	virtual BOOL OnInitDialog();
