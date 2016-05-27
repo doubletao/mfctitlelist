@@ -75,6 +75,7 @@ BEGIN_MESSAGE_MAP(CTitleListCtr, CWnd)
 	ON_WM_VSCROLL()
 	ON_WM_SIZE()
 	ON_WM_LBUTTONDOWN()
+	ON_WM_MOUSEWHEEL()
 END_MESSAGE_MAP()
 
 BOOL CTitleListCtr::PreCreateWindow(CREATESTRUCT& cs)
@@ -464,6 +465,36 @@ void CTitleListCtr::OnLButtonDown(UINT nFlags, CPoint point)
 		}
 	}
 	Invalidate(FALSE);
+}
+
+BOOL CTitleListCtr::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	if(nFlags == 0)
+	{
+		UINT uWheelScrollLines = 2;
+		::SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, &uWheelScrollLines, 0);
+		int nWheelOffset = ::MulDiv(-zDelta, uWheelScrollLines, WHEEL_DELTA);
+		nWheelOffset *= TITLELISTWND_SCROLLSTEP;
+
+		CScrollBar * pScrollBar = &m_scrollVertical;
+		SCROLLINFO ScrollInfo;
+		pScrollBar->GetScrollInfo(&ScrollInfo);
+		int nPosOrg = ScrollInfo.nPos;
+		ScrollInfo.nPos += nWheelOffset;
+		if (ScrollInfo.nPos > ScrollInfo.nMax - max((int)(ScrollInfo.nPage) - 1, 0))
+			ScrollInfo.nPos = ScrollInfo.nMax - max((int)(ScrollInfo.nPage) - 1, 0);
+		if (ScrollInfo.nPos < ScrollInfo.nMin)
+			ScrollInfo.nPos = ScrollInfo.nMin;
+
+		if (ScrollInfo.nPos != nPosOrg)
+		{
+			pScrollBar->SetScrollInfo(&ScrollInfo);
+			m_nScrollPos = pScrollBar->GetScrollPos();
+			Invalidate(FALSE);
+		}
+	}
+
+	return CWnd::OnMouseWheel(nFlags, zDelta, pt);
 }
 
 void CTitleListCtr::ResetScrollInfo()
