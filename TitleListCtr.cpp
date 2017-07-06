@@ -76,6 +76,7 @@ BEGIN_MESSAGE_MAP(CTitleListCtr, CWnd)
 	ON_WM_SIZE()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_MOUSEWHEEL()
+	ON_WM_LBUTTONDBLCLK()
 END_MESSAGE_MAP()
 
 BOOL CTitleListCtr::PreCreateWindow(CREATESTRUCT& cs)
@@ -495,6 +496,11 @@ BOOL CTitleListCtr::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	}
 
 	return CWnd::OnMouseWheel(nFlags, zDelta, pt);
+}
+
+void CTitleListCtr::OnLButtonDblClk(UINT nFlags, CPoint point)
+{
+	return CWnd::OnLButtonDblClk(nFlags, point);
 }
 
 void CTitleListCtr::ResetScrollInfo()

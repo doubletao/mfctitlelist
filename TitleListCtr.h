@@ -40,6 +40,7 @@ protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	void ResetScrollInfo();
 	void DrawItem(CDC * pDC, TitleListItem & item)const;
 	BOOL GetItemRect(int nIndex, CRect &rtItem);//考虑了滚动条的rect
